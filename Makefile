@@ -7,11 +7,15 @@ TARGET = cpp-shapeways
 
 # Generic information
 RM = rm
+MKDIR = mkdir -p
 
-all: $(TARGET)
+all: MAKEDIR $(TARGET)
+
+MAKEDIR: 
+	$(MKDIR) bin
 
 $(TARGET): main.cpp
-	$(CC) $(CLFAGS) -o bin/$(TARGET) main.cpp 
+	$(CC) $(CLFAGS) -o bin/$(TARGET) main.cpp -lcurl
 
 clean:
 	$(RM) $(TARGET) 
