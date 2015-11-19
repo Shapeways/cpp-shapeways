@@ -37,3 +37,10 @@ std::string swApiClient::Url( std::string path ) {
     return BASE_URL + path + API_VERSION;
 }
 
+/*
+====================
+swApiClient Connect 
+
+  Connect to the Shapeways API using oauth 
+====================
+*/
