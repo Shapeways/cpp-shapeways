@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
-#include "Client.h"
+#include "swApiClient.h"
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
@@ -15,9 +15,11 @@ int main(void)
   CURLcode res;
   std::string readBuffer;
 
+  swApiClient client("a", "b", "c");
+
   curl = curl_easy_init();
   if(curl) {
-    curl_easy_setopt(curl, CURLOPT_URL, "http://www.google.com");
+    curl_easy_setopt(curl, CURLOPT_URL, "http://api.shapeways.com");
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     res = curl_easy_perform(curl);

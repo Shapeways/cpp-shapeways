@@ -15,7 +15,7 @@ MAKEDIR:
 	$(MKDIR) bin
 
 $(TARGET): main.cpp
-	$(CC) $(CLFAGS) -o bin/$(TARGET) main.cpp -lcurl
+	$(CC) $(CLFAGS) -o bin/$(TARGET) main.cpp swApiClient.cpp -lcurl 
 
 clean:
 	$(RM) $(TARGET) 
