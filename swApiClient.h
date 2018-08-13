@@ -23,14 +23,16 @@ class swApiClient
 
         std::string             consumerKey;
         std::string             consumerSecret;
+        std::string             accessToken;
 
-        swApiClient() {}
-        std::string Url( std::string Path ); // URL generator
+        struct curl_slist * SetAuthHeader(CURL* curl);
 
     public:
-        swApiClient( std::string consumerKey, std::string consumerSecret);
+        swApiClient( std::string consumerKey, std::string consumerSecret );
+        void PrintToken();
         void Authorize();
-
+        std::string GetMaterials();
+        std::string UploadModel( std::string modelFilePath );
 };
 
 #endif
