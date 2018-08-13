@@ -21,16 +21,13 @@ class swApiClient
 
         std::string             consumerKey;
         std::string             consumerSecret;
-        std::string             callbackUrl;
-        std::string             oauthToken;
-        std::string             oauth_secret;
 
         swApiClient() {}
         std::string Url( std::string Path ); // URL generator
 
     public:
-        swApiClient( std::string consumerKey, std::string consumerSecret, std::string callbackUrl);
-        void Connect(); // Connect and auth
+        swApiClient( std::string consumerKey, std::string consumerSecret);
+        bool Authorize();
 
 };
 
