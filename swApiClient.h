@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
+#include "json.hpp"
+
 
 /*
 ===============================================================================
@@ -27,7 +29,7 @@ class swApiClient
 
     public:
         swApiClient( std::string consumerKey, std::string consumerSecret);
-        bool Authorize();
+        void Authorize();
 
 };
 

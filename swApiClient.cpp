@@ -57,7 +57,7 @@ swApiClient Authorize
   Connect to the Shapeways API using oauth
 ====================
 */
-bool swApiClient::Authorize() {
+void swApiClient::Authorize() {
 
   CURL *curl;
   CURLcode res;
