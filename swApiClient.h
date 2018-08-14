@@ -10,7 +10,14 @@
 /*
 ===============================================================================
 
-    This is a client for the Shapeways API.  More information available at
+    This is a sample client for the Shapeways API.  It is intended to
+    illustrate the capabilities of and patterns for interacting with
+    the API, not to provide a full reference client.
+
+    We welcome any pull requests to improve or further implement the API
+    for the community to use.
+
+    More information available at
     http://developers.shapeways.com/docs
 
 ===============================================================================
@@ -18,18 +25,14 @@
 class swApiClient
 {
     private:
-        static std::string      BASE_URL;
-        static std::string      API_VERSION;
-
         std::string             consumerKey;
         std::string             consumerSecret;
         std::string             accessToken;
 
-        struct curl_slist * SetAuthHeader(CURL* curl);
+        struct curl_slist * SetAuthHeader();
 
     public:
         swApiClient( std::string consumerKey, std::string consumerSecret );
-        void PrintToken();
         void Authorize();
         std::string GetMaterials();
         std::string UploadModel( std::string modelFilePath );
