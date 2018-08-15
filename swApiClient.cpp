@@ -11,16 +11,15 @@ struct curl_slist * swApiClient::SetAuthHeader() {
   char *headerStr = (char*)malloc(250);
   strcpy(headerStr, "Authorization: Bearer ");
   strcat(headerStr, this->accessToken.c_str());
-  cout << headerStr << endl;
   struct curl_slist *headers = NULL;
   headers = curl_slist_append(headers, headerStr);
   return headers;
 }
 
-static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+static size_t WriteCallback(void *contents, size_t size, size_t numElements, void *userp)
 {
-    ((string*)userp)->append((char*)contents, size * nmemb);
-    return size * nmemb;
+    ((string*)userp)->append((char*)contents, size * numElements);
+    return size * numElements;
 }
 
 /*
@@ -63,12 +62,22 @@ void swApiClient::Authorize() {
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     res = curl_easy_perform(curl);
+
+    // If non-200 response, log error
     if (res != 0) {
       throw runtime_error(curl_easy_strerror(res));
     }
     curl_easy_cleanup(curl);
     json j = json::parse(readBuffer);
-    this->accessToken = j["access_token"];
+    try {
+      this->accessToken = j["access_token"];
+    }
+    catch (const std::exception& e) {
+      throw runtime_error(readBuffer);
+    }
+
+  } else {
+    throw runtime_error("Could not initialize curl object");
   }
 }
 
@@ -83,6 +92,12 @@ string swApiClient::GetMaterials() {
   CURL *curl;
   CURLcode res;
   string readBuffer;
+
+  // Ensure bearer token present
+  if (this->accessToken == "") {
+    throw runtime_error("No access token set: did you run .Authorize()?");
+  }
+
   curl = curl_easy_init();
   struct curl_slist *headers = NULL;
   if(curl) {
@@ -103,7 +118,9 @@ string swApiClient::GetMaterials() {
     curl_slist_free_all(headers);
     curl_easy_cleanup(curl);
   }
+  else {
+    throw runtime_error("Could not initialize curl object");
+  }
   json j = json::parse(readBuffer);
-  cout << j << endl;
   return j.dump();
 }

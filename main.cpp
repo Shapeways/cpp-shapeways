@@ -8,5 +8,5 @@ int main(void)
   // You can find them at https://developers.shapeways.com/manage-apps
   swApiClient *client = new swApiClient("CLIENT_ID", "CLIENT_SECRET");
   client->Authorize();
-  // client->GetMaterials();
+  std::cout << client->GetMaterials() << std::endl;
 }
