@@ -1,6 +1,6 @@
-# Compiler information 
+# Compiler information
 CC = g++
-CFLAGS = -g -Wall
+CFLAGS = -Wall -std=c++11
 
 # Target information
 TARGET = cpp-shapeways
@@ -11,11 +11,11 @@ MKDIR = mkdir -p
 
 all: MAKEDIR $(TARGET)
 
-MAKEDIR: 
+MAKEDIR:
 	$(MKDIR) bin
 
 $(TARGET): main.cpp
-	$(CC) $(CLFAGS) -o bin/$(TARGET) main.cpp swApiClient.cpp -lcurl 
+	$(CC) $(CFLAGS) -o bin/$(TARGET) main.cpp swApiClient.cpp -lcurl
 
 clean:
-	$(RM) $(TARGET) 
+	$(RM) $(TARGET)
