@@ -62,6 +62,7 @@ void swApiClient::Authorize() {
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     res = curl_easy_perform(curl);
+    free(postData);
 
     // If non-200 response, log error
     if (res != 0) {
